@@ -8,19 +8,19 @@ type LegacyModDependencies = OrderedTable[ModID, SemVerConstraint]
 
 type Manifest2* = object
   name*: ModId
-  version: SemVer
-  ccmodHumanName: string
-  description: string
-  license: SPDXExpression
-  homepage: string
-  icons: ModIcons
-  ccmodDependencies: LegacyModDependencies
-  assets: seq[FilePath]
-  plugin: FilePath
-  preload: FilePath
-  postload: FilePath
-  prestart: FilePath
-  main: FilePath
+  version*: SemVer
+  ccmodHumanName*: string
+  description*: string
+  license*: SPDXExpression
+  homepage*: string
+  icons*: ModIcons
+  ccmodDependencies*: LegacyModDependencies
+  assets*: seq[FilePath]
+  plugin*: FilePath
+  preload*: FilePath
+  postload*: FilePath
+  prestart*: FilePath
+  main*: FilePath
 
 proc `%`*(man: Manifest2) : JsonNode = 
   result = %* {
@@ -100,5 +100,11 @@ proc norm*(wrapper: var Manifest2Wrapper): void =
 proc sync*(wrapper: Manifest2Wrapper): void =
   for key, value in %wrapper.manifest:
     wrapper.data[key] = copy(value)
+
+
+proc newManifest2Wrapper*(jsonData: string): Manifest2Wrapper = 
+  result = Manifest2Wrapper(data: parseJson(jsonData))
+  result.norm
+  
 
 
