@@ -1,5 +1,5 @@
 import json
-import ./src/package/manifest2
+import ./package/manifest2
 
 var jsonData = parseJson("{}")
 var man = Manifest2Wrapper(data: jsonData)
